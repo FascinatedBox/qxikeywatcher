@@ -3,28 +3,32 @@ cmake_minimum_required(VERSION 3.5.0)
 
 find_package(
     Qt5
-    REQUIRED
+    COMPONENTS
         Widgets
+    REQUIRED
 )
-
 find_package(
     X11
     COMPONENTS
         Xext
         Xi
         Xkb
+    REQUIRED
 )
 
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 set(MOCUIC_DIR ${CMAKE_CURRENT_BINARY_DIR}/.mocuic)
-set(QXIKEYWATCHER_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(
     qxikeywatcher
-        src/main.cpp
+        demo/demo.cpp
         src/qxikeywatcher.cpp
+)
+
+target_include_directories(
+    qxikeywatcher
+    PRIVATE
+        src/
 )
 
 set_target_properties(
@@ -32,8 +36,6 @@ set_target_properties(
     PROPERTIES
         AUTOGEN_BUILD_DIR
             ${MOCUIC_DIR}
-        RUNTIME_OUTPUT_DIRECTORY
-            ${QXIKEYWATCHER_BINARY_DIR}
 )
 
 target_link_libraries(
